@@ -4,9 +4,6 @@
   const pokemonName = ref('');
   const pokemonData = ref(null);
 
-  function onInput(e) {
-    pokemonName.value = e.target.value;
-  }
   async function fetchPokemonData() {
     console.log(pokemonName.value);
     const res = await fetch(
@@ -29,7 +26,7 @@
       >を参照
     </p>
   </div>
-  <input :value="pokemonName" @input="onInput" placeholder="Type here" />
+  <input v-model="pokemonName" placeholder="Type here" />
   <p>{{ pokemonName }}</p>
   <button @click="fetchPokemonData">ポケモンを検索</button>
   <!-- <p v-if="!pokemonData">{{ loadingText }}</p> -->
