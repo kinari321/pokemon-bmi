@@ -5,12 +5,23 @@
   const pokemonData = ref(null);
 
   async function fetchPokemonData() {
-    console.log(pokemonName.value);
-    const res = await fetch(
-      `https://pokeapi.co/api/v2/pokemon/${pokemonName.value}`
-    );
-    pokemonData.value = await res.json();
+    try {
+      const res = await fetch(
+        `https://pokeapi.co/api/v2/pokemon/${pokemonName.value}`
+      );
+      if (!res.ok) {
+        throwError(res);
+      }
+      pokemonData.value = await res.json();
+    } catch (err) {
+      console.error('Failed to fetch Pokemon data:', err);
+    }
+
     pokemonName.value = '';
+  }
+
+  function throwError(err) {
+    throw new Error(`エラーが発生しました！\n  ステータスコード${err.status}`);
   }
 </script>
 
