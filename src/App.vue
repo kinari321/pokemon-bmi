@@ -28,34 +28,36 @@
 <template>
   <div>
     <p>ポケモンの英語名または番号を入力してください。</p>
-    <p>
-      <div>ポケモン番号については
-        <a
-          href="https://wiki.xn--rckteqa2e.com/wiki/%E3%83%9D%E3%82%B1%E3%83%A2%E3%83%B3%E4%B8%80%E8%A6%A7"
-          target="_blank"
-          rel="noopener noreferrer"
-          >こちら</a
-        >を参照
-      </div>
-    </p>
+    <div>
+      ポケモン番号については
+      <a
+        href="https://wiki.xn--rckteqa2e.com/wiki/%E3%83%9D%E3%82%B1%E3%83%A2%E3%83%B3%E4%B8%80%E8%A6%A7"
+        target="_blank"
+        rel="noopener noreferrer"
+        >こちら</a
+      >を参照
+    </div>
   </div>
   <input v-model="pokemonName" placeholder="Type here" />
   <button @click="fetchPokemon">ポケモンを検索</button>
-  <p v-if=!pokemon></p>
-  <p v-else>
+  <p v-if="!pokemon"></p>
+  <div v-else>
     <p>名前 : {{ pokemon?.name }}</p>
-    <p>高さ : {{ pokemon?.height / 10}} m</p>
+    <p>高さ : {{ pokemon?.height / 10 }} m</p>
     <p>重さ : {{ pokemon?.weight / 10 }} kg</p>
-    <p>BMI値 :{{ pokemon?.weight / (pokemon?.height * pokemon?.height) * 10}}</p>
+    <p>
+      BMI値 :{{ (pokemon?.weight / (pokemon?.height * pokemon?.height)) * 10 }}
+    </p>
     <p>
       ポケモン番号 : No.{{ pokemon?.id }}
       （ポケモン図鑑は
-          <a
-          :href="`https://zukan.pokemon.co.jp/detail/${pokemon?.id}`"
-            target="_blank"
-            rel="noopener noreferrer"
-        >こちら</a>）
+      <a
+        :href="`https://zukan.pokemon.co.jp/detail/${pokemon?.id}`"
+        target="_blank"
+        rel="noopener noreferrer"
+        >こちら</a
+      >）
     </p>
     <pre>{{ pokemon }}</pre>
-  </p>
+  </div>
 </template>
