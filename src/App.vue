@@ -2,9 +2,9 @@
   import { ref, onMounted } from 'vue';
 
   const pokemonName = ref('');
-  const pokemonData = ref(null);
+  const pokemon = ref(null);
 
-  async function fetchPokemonData() {
+  async function fetchPokemon() {
     try {
       const res = await fetch(
         `https://pokeapi.co/api/v2/pokemon/${pokemonName.value}`
@@ -12,7 +12,7 @@
       if (!res.ok) {
         throwError(res);
       }
-      pokemonData.value = await res.json();
+      pokemon.value = await res.json();
     } catch (err) {
       console.error('Failed to fetch Pokemon data:', err);
     }
@@ -40,23 +40,22 @@
     </p>
   </div>
   <input v-model="pokemonName" placeholder="Type here" />
-  <p>{{ pokemonName }}</p>
-  <button @click="fetchPokemonData">ポケモンを検索</button>
-  <p v-if=!pokemonData></p>
+  <button @click="fetchPokemon">ポケモンを検索</button>
+  <p v-if=!pokemon></p>
   <p v-else>
-    <p>名前 : {{ pokemonData?.name }}</p>
-    <p>高さ : {{ pokemonData?.height / 10}} m</p>
-    <p>重さ : {{ pokemonData?.weight / 10 }} kg</p>
-    <p>BMI値 :{{ pokemonData?.weight / (pokemonData?.height * pokemonData?.height) * 10}}</p>
+    <p>名前 : {{ pokemon?.name }}</p>
+    <p>高さ : {{ pokemon?.height / 10}} m</p>
+    <p>重さ : {{ pokemon?.weight / 10 }} kg</p>
+    <p>BMI値 :{{ pokemon?.weight / (pokemon?.height * pokemon?.height) * 10}}</p>
     <p>
-      ポケモン番号 : No.{{ pokemonData?.id }}
+      ポケモン番号 : No.{{ pokemon?.id }}
       （ポケモン図鑑は
           <a
-          :href="`https://zukan.pokemon.co.jp/detail/${pokemonData?.id}`"
+          :href="`https://zukan.pokemon.co.jp/detail/${pokemon?.id}`"
             target="_blank"
             rel="noopener noreferrer"
         >こちら</a>）
     </p>
-    <pre>{{ pokemonData }}</pre>
+    <pre>{{ pokemon }}</pre>
   </p>
 </template>
